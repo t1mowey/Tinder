@@ -26,4 +26,5 @@ jobs:
             else
               git pull
             fi
+            sudo /bin/systemctl restart tinder
 
