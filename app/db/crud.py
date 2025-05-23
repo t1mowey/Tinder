@@ -1,4 +1,4 @@
-from .database import get_db
+from app.db.database import get_db
 from app import models, schema
 
 def get_product(db: get_db, product_id: int):

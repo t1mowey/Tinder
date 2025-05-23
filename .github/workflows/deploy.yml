@@ -26,5 +26,7 @@ jobs:
             else
               git pull
             fi
+            source .venv/bin/activate  # если ты используешь виртуальное окружение
+            python -m app.db.init_db
             sudo /bin/systemctl restart tinder
 

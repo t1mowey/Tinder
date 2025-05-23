@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class ProductBase(BaseModel):
@@ -11,10 +11,15 @@ class ProductBase(BaseModel):
 
 
 class ProductCreate(ProductBase):
-    pass  # если надо, можно добавить обязательные поля при создании
+    pass
 
 class ProductRead(ProductBase):
     id: int
 
     class Config:
-        orm_mode = True  # чтобы можно было возвращать ORM-модели напрямую
+        orm_mode = True
+
+
+class User(BaseModel):
+    email: EmailStr
+    password: str

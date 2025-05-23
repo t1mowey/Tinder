@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from .database import Base
+from app.db.database import Base
 
 class Product(Base):
     __tablename__ = 'items'
@@ -21,4 +21,20 @@ class Product(Base):
             f"name='{self.name}', "
             f"price='{self.price}', "
             f"details='{self.details}')>"
+        )
+
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    email = Column(String)
+    password = Column(String)
+    token = Column(String)
+
+    def __repr__(self):
+        return (
+            f"<User(id={self.id}, "
+            f"email='{self.email}', "
+            f"password='{self.password}', "
+            f"token='{self.token}')>"
         )
