@@ -49,4 +49,4 @@ class Action(Base):
     user_token = Column(String, nullable=False)
     product_uid = Column(String, nullable=False)
     action = Column(Integer, nullable=False)
-    __table_args__ = (CheckConstraint('action IN (0,1)', name='chk_action_flag'))
+    __table_args__ = (CheckConstraint('action IN (0,1)', name='chk_action_flag'),)
