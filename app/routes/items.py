@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, Response
+from fastapi import APIRouter, Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List
@@ -22,7 +22,16 @@ def read_random_items(limit: int = 100, db: Session = Depends(get_db)):
 
 
 @router.post('/action', status_code=status.HTTP_201_CREATED)
-def create_action(data: schema.Action, db: SessionLocal = Depends(get_db)):
+def create_action(data: schema.Action, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.token == data.user_token).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Invalid user token")
+    product = db.query(models.Product).filter(models.Product.uid == data.product_uid).first()
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="Invalid product token")
+
     new_action = models.Action(
         user_token=data.user_token,
         product_uid=data.product_uid,
