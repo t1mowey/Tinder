@@ -8,5 +8,10 @@ def init():
     Base.metadata.create_all(bind=engine)
     print("Done.")
 
+
+def drop(table: str):
+    pass
+
+
 if __name__ == "__main__":
     init()
