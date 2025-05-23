@@ -5,6 +5,7 @@ class Product(Base):
     __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True)
+    uid = Column(String(64), unique=True, nullable=True, index=True)
     photo = Column(String)
     link = Column(String)
     brand = Column(String)
@@ -12,9 +13,11 @@ class Product(Base):
     price = Column(String)
     details = Column(String)
 
+
     def __repr__(self):
         return (
             f"<Product(id={self.id}, "
+            f"uid='{self.uid}', "
             f"photo='{self.photo}', "
             f"link='{self.link}', "
             f"brand='{self.brand}', "

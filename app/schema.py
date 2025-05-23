@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class ProductBase(BaseModel):
+    uid: Optional[str]
     photo: Optional[str]
     link: Optional[str]
     brand: Optional[str]
