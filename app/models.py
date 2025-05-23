@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, CheckConstraint
 from app.db.database import Base
 
 class Product(Base):
@@ -41,3 +41,12 @@ class User(Base):
             f"password='{self.password}', "
             f"token='{self.token}')>"
         )
+
+
+class Action(Base):
+    __tablename__ = 'actions'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_token = Column(String, nullable=False)
+    product_uid = Column(String, nullable=False)
+    action = Column(Integer, nullable=False)
+    __table_args__ = CheckConstraint('action IN (0,1)', name='chk_action_flag')

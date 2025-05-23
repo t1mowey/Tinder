@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List
-from app.db.database import get_db
+from app.db.database import get_db, SessionLocal
 
 from app import models, schema
 
@@ -21,8 +21,17 @@ def read_random_items(limit: int = 100, db: Session = Depends(get_db)):
     return items
 
 
-# @router.post('/action')
-# def create_action():
+@router.post('/action', status_code=status.HTTP_201_CREATED)
+def create_action(data: schema.Action, db: SessionLocal = Depends(get_db)):
+    new_action = models.Action(
+        user_token=data.user_token,
+        product_uid=data.product_uid,
+        action=data.action
+    )
+    db.add(new_action)
+    db.commit()
+    return Response(status_code=status.HTTP_201_CREATED)
+
 
 
 

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, conint
 from typing import Optional
 
 class ProductBase(BaseModel):
@@ -24,3 +24,15 @@ class ProductRead(ProductBase):
 class User(BaseModel):
     email: EmailStr
     password: str
+
+
+class Action(BaseModel):
+    user_token:  str
+    product_uid: str
+    action: conint(ge=0, le=1)
+
+    class Config:
+        orm_mode = True
+
+
+
