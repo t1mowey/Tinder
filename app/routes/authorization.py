@@ -41,7 +41,7 @@ def reg_user(data: schema.User, db: Session = Depends(get_db)):
     )
 
 @auth.post("/login")
-def authorization(data: schema.User, db: SessionLocal = Depends(get_db)):
+def authorization(data: schema.User, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == data.email).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
