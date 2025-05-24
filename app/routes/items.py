@@ -2,8 +2,9 @@ from fastapi import APIRouter, Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List
-from app.db.database import get_db, SessionLocal
+from time import time
 
+from app.db.database import get_db
 from app import models, schema
 
 router = APIRouter(prefix="/items", tags=["items"])
@@ -35,12 +36,30 @@ def create_action(data: schema.Action, db: Session = Depends(get_db)):
     new_action = models.Action(
         user_token=data.user_token,
         product_uid=data.product_uid,
-        action=data.action
+        action=data.action,
+        timestamp=time.now()
     )
     db.add(new_action)
     db.commit()
     return Response(status_code=status.HTTP_201_CREATED)
 
+
+@router.get('/random_recs', status_code=200)
+def get_random_recommendations(token: str, limit: int = 5, db: Session = Depends(get_db)):
+    user_actions = (db
+                    .query(models.Action)
+                    .filter(models.Action.user_token == token)
+                    .all()
+                    )
+    user_views = [i.product_uid for i in user_actions]
+    recs = (db
+            .query(models.Product)
+            .filter(~models.Product.uid.in_(user_views))
+            .order_by(func.random())
+            .limit(limit)
+            .all()
+            )
+    return recs
 
 
 

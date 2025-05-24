@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
-from app.db.database import get_db, SessionLocal
+from app.db.database import get_db
 from app import schema
 from app.models import User
-# from pydantic import EmailStr, ValidationError
+from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
 import secrets
 
@@ -21,7 +21,7 @@ auth = APIRouter(tags=["auth"])
 
 
 @auth.post('/register')
-def reg_user(data: schema.User, db: SessionLocal = Depends(get_db)):
+def reg_user(data: schema.User, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == data.email).first()
     if existing_user:
         raise HTTPException(

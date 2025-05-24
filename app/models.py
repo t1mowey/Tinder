@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, CheckConstraint
+from sqlalchemy import Column, Integer, String, CheckConstraint, TIMESTAMP
 from app.db.database import Base
 
 class Product(Base):
@@ -49,6 +49,7 @@ class Action(Base):
     user_token = Column(String, nullable=False)
     product_uid = Column(String, nullable=False)
     action = Column(Integer, nullable=False)
+    timestamp = Column(TIMESTAMP)
     __table_args__ = (
         CheckConstraint('action IN (0,1)', name='chk_action_flag'),
     )
