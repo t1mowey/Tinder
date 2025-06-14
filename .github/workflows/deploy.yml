@@ -26,8 +26,47 @@ jobs:
             else
               git pull
             fi
-            source .venv/bin/activate  # если ты используешь виртуальное окружение
+            source .venv/bin/activate
             pip install -r requirements.txt
             python -m app.db.init_db
             sudo /bin/systemctl restart tinder
 
+      - name: Health check
+        id: check
+        run: |
+          STATUS=$(curl -s -o body.txt -w "%{http_code}" https://your-domain.com/deploy_ok)
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "body=$(cat body.txt)" >> $GITHUB_OUTPUT
+
+      - name: Send mail if deploy OK
+        if: steps.check.outputs.status == '200'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: "✅ Tinder Deploy Successful"
+          to: timur.prokhorov1@gmail.com
+          from: timur.prokhorov1@gmail.com
+          body: |
+            🎉 Deploy прошёл успешно!
+            Ответ сервера:
+            ${{ steps.check.outputs.body }}
+
+      - name: Send mail if deploy failed
+        if: steps.check.outputs.status != '200'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: "❌ Tinder Deploy FAILED! Status ${{ steps.check.outputs.status }}"
+          to: timur.prokhorov1@gmail.com
+          from: timur.prokhorov1@gmail.com
+          body: |
+            🚨 Ошибка при деплое!
+            Status code: ${{ steps.check.outputs.status }}
+            Ответ сервера:
+            ${{ steps.check.outputs.body }}
