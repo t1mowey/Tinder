@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="40025846-c274-4448-94ed-25ac0c9278eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/crud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/init_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/authorization.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/authorization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,17 +51,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.app.executor": "Run",
-    "Python.init_db.executor": "Run",
-    "Python.update_products.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Тимофей/PycharmProjects/Tinder_1.0.0",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.init_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.update_products.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Тимофей/PycharmProjects/Tinder_1.0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Тимофей\PycharmProjects\Tinder_1.0.0\app\db" />

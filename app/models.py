@@ -30,9 +30,9 @@ class Product(Base):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    email = Column(String)
-    password = Column(String)
-    token = Column(String)
+    email = Column(String(255), nullable=False, unique=True)
+    password = Column(String(255), nullable=False)
+    token = Column(String(255), nullable=False, unique=True)
 
     def __repr__(self):
         return (

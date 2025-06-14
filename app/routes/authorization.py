@@ -3,7 +3,8 @@ from fastapi.responses import JSONResponse
 from app.db.database import get_db
 from app import schema
 from app.models import User
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from passlib.hash import bcrypt
 import secrets
 
@@ -21,8 +22,12 @@ auth = APIRouter(tags=["auth"])
 
 
 @auth.post('/register')
-def reg_user(data: schema.User, db: Session = Depends(get_db)):
-    existing_user = db.query(User).filter(User.email == data.email).first()
+async def reg_user(data: schema.User, db: AsyncSession = Depends(get_db)):
+    existing_user = (await db.execute(
+        select(User).
+        filter(User.email == data.email)
+               )
+                     ).scalar_one_or_none()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -34,24 +39,26 @@ def reg_user(data: schema.User, db: Session = Depends(get_db)):
                     password=hashed_pass,
                     token=token)
     db.add(new_user)
-    db.commit()
+    await db.commit()
     return JSONResponse(
         content={"token": token},
         status_code=201
     )
 
+
 @auth.post("/login")
-def authorization(data: schema.User, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == data.email).first()
+async def authorization(data: schema.User, db: AsyncSession = Depends(get_db)):
+    user = (await db.execute(
+        select(User).
+        filter(User.email == data.email)
+    )
+            ).scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Wrong password!")
+                            detail="Wrong email or password!")
 
     if not bcrypt.verify(data.password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Wrong password!")
+                            detail="Wrong email or password!")
 
     return {'token': user.token}
-
-
-

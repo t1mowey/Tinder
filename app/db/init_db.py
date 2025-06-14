@@ -1,5 +1,3 @@
-# app/db/init_db.py
-
 from app.db.database import Base, engine
 from app import models
 

@@ -8,4 +8,4 @@ app.include_router(authorization.auth)# подключаем роуты
 
 @app.get("/")
 async def root():
-    return {"message": "Hello, Tinder!"}
+    return {"message": "Hello, check /docs to see all the routes."}
