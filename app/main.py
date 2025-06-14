@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.routes import items, authorization  # импорт роутера
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 app.include_router(items.router)
 app.include_router(authorization.auth)# подключаем роуты
