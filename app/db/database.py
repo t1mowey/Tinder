@@ -13,7 +13,8 @@ SessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine
 
 Base = declarative_base()
 
-def get_db():
+
+async def get_db():
     async with SessionLocal() as db:
         yield db
 
